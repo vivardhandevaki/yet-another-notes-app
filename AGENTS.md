@@ -18,3 +18,14 @@ Rules that bind you:
   computing base. CI judges by the **target branch**’s config, never the PR’s.
 - "Done" means the artifact validates or the named tests pass — never a self-report.
 <!-- /crucible:managed -->
+
+## Repository workflow
+
+- Never commit or push directly to `main`. Create a branch and merge every
+  change through a pull request.
+- For every code, build, configuration, dependency, or test change, follow the
+  Crucible workflow above. If a requested change has not entered that workflow,
+  nudge the requester to create or identify the appropriate Crucible change
+  before implementation.
+- Documentation-only and repository-guidance changes may use the normal
+  pull-request workflow without a Crucible change.
