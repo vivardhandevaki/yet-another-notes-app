@@ -29,3 +29,11 @@ Rules that bind you:
   before implementation.
 - Documentation-only and repository-guidance changes may use the normal
   pull-request workflow without a Crucible change.
+
+## Post-merge metrics
+
+- After a Crucible-governed change merges, collect its metrics from Crucible
+  artifacts, GitHub PR/check metadata, and state events. Append one row to
+  `docs/metrics.md` in a documentation-only follow-up pull request.
+- Never guess missing values. Record `pending` when a value is unavailable.
+- This metrics update is a convenience only and must never affect enforcement.
