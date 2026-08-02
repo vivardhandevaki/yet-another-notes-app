@@ -4,3 +4,7 @@ target/
 .project
 .classpath
 .settings/
+# Crucible — personal convenience + caller-minted trajectories (never committed)
+.crucible/local.yaml
+.crucible/transcripts/
+.crucible/verdicts/

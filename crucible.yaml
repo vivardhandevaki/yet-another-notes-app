@@ -1,0 +1,41 @@
+# Crucible enforcement config (charter §Configuration & Reviewer Law).
+# ENFORCEMENT ONLY: risk globs, tiers, adapters, suites, trajectory, audit.
+# In CI this file is read from the *target* branch, never the PR branch
+# (invariant 7). Convenience (models, notify) lives in .crucible/settings.yaml.
+risk:
+  critical: # any match → tier critical, human review required
+    - "src/**/auth/**"
+    - "src/**/payments/**"
+    - "db/migrations/**"
+    - "**/pom.xml" # dependency changes
+    - "**/build.gradle*"
+    - "AGENTS.md" # canonical agent instructions
+    - "CLAUDE.md" # Claude compatibility bridge
+    - ".agents/**" # shared agent skills and instructions
+    - ".codex/**" # Codex project configuration
+    - ".claude/**" # Claude Code project configuration
+    - ".github/workflows/**" # CI is TCB
+    - ".crucible/**" # harness is TCB (settings.yaml carved out below)
+    - "openspec/schemas/**" # workflow definition is TCB
+    - "crucible.yaml" # this file governs itself
+  exempt:
+    - ".crucible/settings.yaml"
+    - ".crucible/local.yaml"
+
+tiers:
+  trivial: { diff_cap: 150 }
+  standard: { diff_cap: 400 }
+  critical: { diff_cap: 400, mutation: blocking }
+
+adapters:
+  java-junit: { runners: ["junit"], paths: ["**/*.java"] }
+
+suites:
+  unit: "mvn test" # the project's standard invocation
+
+trajectory:
+  require_local_verify: true
+  iteration_budget: 12
+
+audit:
+  sample_rate: 0.1 # of auto-merges → weekly digest
