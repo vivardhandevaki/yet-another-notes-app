@@ -1,0 +1,3 @@
+spring:
+  application:
+    name: yet-another-notes-app
