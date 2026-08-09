@@ -1,0 +1,12 @@
+version: 1
+change: create-note
+generated_at: 2026-08-09T18:18:48.076Z
+artifacts:
+  - path: proposal.md
+    hash: 8774b0b347f171da957d5e8b42c07bedec37b0992c4df2680e4b817d374180ff
+  - path: design.md
+    hash: d296e53a93f4e49b93031902119ee0a4e7e0711ca3f62c4f9babe02528d309b6
+  - path: specs/notes/spec.md
+    hash: c8707f0f9bd0d7b80cb2d7fe400e94d832fca4a398f3e7616c62ef6087b75137
+  - path: oracles.md
+    hash: eb9a6ee90ed794404eab335a914f4ede06c28b42f6a2db7641b67dda37e0b59d

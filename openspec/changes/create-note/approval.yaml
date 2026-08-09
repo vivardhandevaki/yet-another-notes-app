@@ -1,0 +1,13 @@
+version: 1
+change: create-note
+approved_by: vivardhan
+approved_at: 2026-08-09T18:25:48.304Z
+files:
+  .crucible/adapters.lock.yaml: 03b9cc207b17073fd036a154fb03a6c60fef0871e0ad4c02d74a4058cfbc2565
+  .crucible/framework.lock.json: 4887c4d913b1150c4b5537e08c21b44e35799695a1e9c8c3c1ae86e286e74a79
+  openspec/changes/create-note/design.md: d296e53a93f4e49b93031902119ee0a4e7e0711ca3f62c4f9babe02528d309b6
+  openspec/changes/create-note/oracles.md: eb9a6ee90ed794404eab335a914f4ede06c28b42f6a2db7641b67dda37e0b59d
+  openspec/changes/create-note/proposal.md: 8774b0b347f171da957d5e8b42c07bedec37b0992c4df2680e4b817d374180ff
+  openspec/changes/create-note/specs/notes/spec.md: c8707f0f9bd0d7b80cb2d7fe400e94d832fca4a398f3e7616c62ef6087b75137
+  src/test/java/com/vivardhandevaki/notes/NoteControllerIntegrationTest.java: c5f7455505782057c4bd6a80a237d535886f444934a587925ba2b89067d82c92
+amendments: []
