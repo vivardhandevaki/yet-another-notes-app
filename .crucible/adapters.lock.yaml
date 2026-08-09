@@ -4,4 +4,4 @@ adapters:
     version: 0.0.0
     manifest: .crucible/adapters/java-junit.yaml
     executable: .crucible/adapters/java-junit.mjs
-    content_hash: c940ef4e96a0c200577fd8349bafe22c8960d28884c3ca0b0ecd7f65d24b3ed3
+    content_hash: 084eacdfeb162c618a171cedd6f09f72a54ba7ce9be2ec716b8ce6a203129b3a

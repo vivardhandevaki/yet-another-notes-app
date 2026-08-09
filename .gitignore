@@ -8,3 +8,6 @@ target/
 .crucible/local.yaml
 .crucible/transcripts/
 .crucible/verdicts/
+# Crucible — personal convenience + caller-minted trajectories (never committed)
+.crucible/sessions/
+.crucible/bin/
