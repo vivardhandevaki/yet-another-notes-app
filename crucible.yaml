@@ -27,6 +27,9 @@ tiers:
   standard: { diff_cap: 400 }
   critical: { diff_cap: 400, mutation: blocking }
 
+review:
+  ci_mode: advisory
+
 adapters:
   java-junit: { runners: ["junit"], paths: ["**/*.java"] }
 

@@ -1,0 +1,12 @@
+version: 1
+change: enable-advisory-ci-review
+generated_at: 2026-08-09T21:27:48.649Z
+artifacts:
+  - path: proposal.md
+    hash: e239119f622ef5020732b309b2e08949325b8e99a770cbf8e85becf71aad54a6
+  - path: design.md
+    hash: 3ffc0f0bd2eee8ccea55b97d69f9164c45f8443465595893b404219f729196c1
+  - path: specs/ci-review-policy/spec.md
+    hash: 36f00cf20cf1b1c824a001fc9e034c14fdc99b2e2cd6dce07b238a045a5ccb5e
+  - path: oracles.md
+    hash: 7288f2cd2950569645a9ee48add5ec0346ba2b2bae2bacd40dfe6c211334c861

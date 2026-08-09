@@ -1,0 +1,17 @@
+version: 1
+change: enable-advisory-ci-review
+approved_by: vivardhan
+approved_at: 2026-08-09T22:19:47.236Z
+files:
+  .crucible/adapters.lock.yaml: 03b9cc207b17073fd036a154fb03a6c60fef0871e0ad4c02d74a4058cfbc2565
+  .crucible/framework.lock.json: 3c3a744ffd0a929b533434bcb080cbaf8a30cb7c04243ffad5cbd2e9155d19aa
+  openspec/changes/enable-advisory-ci-review/design.md: 3ffc0f0bd2eee8ccea55b97d69f9164c45f8443465595893b404219f729196c1
+  openspec/changes/enable-advisory-ci-review/oracles.md: 7288f2cd2950569645a9ee48add5ec0346ba2b2bae2bacd40dfe6c211334c861
+  openspec/changes/enable-advisory-ci-review/proposal.md: e239119f622ef5020732b309b2e08949325b8e99a770cbf8e85becf71aad54a6
+  openspec/changes/enable-advisory-ci-review/specs/ci-review-policy/spec.md: 36f00cf20cf1b1c824a001fc9e034c14fdc99b2e2cd6dce07b238a045a5ccb5e
+  src/test/java/com/vivardhandevaki/notes/CiReviewPolicyTest.java: 07ecb8d4d749d81e48bf2c58458a158852fb06493220faa534c4efa928254aee
+minimum_tier: critical
+amendments: []
+acks:
+  - oracle: ORC-ci-review-policy-001
+    at: 2026-08-09T22:19:14.041Z
