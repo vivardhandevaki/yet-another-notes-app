@@ -8,22 +8,29 @@ events:
     cmd: approve
     summary: sealed 7 file(s)
   - at: 2026-08-10T16:25:51.114Z
+    execution_mode: session-native
     cmd: implement
     summary: session-native local verify pass
-    execution_mode: session-native
 snapshot:
   phase: implemented
   tier:
     tier: critical
-    computed: standard
+    computed: critical
     forced: critical
     reasons:
-      - spec delta present, no risk-glob match → at least standard
-      - forced up to critical via --tier
+      - "risk-glob match: .github/workflows/crucible-review.yml ~
+        .github/workflows/** → critical (dominates)"
+      - --tier critical matches the computed tier
     facts:
       spec_delta: true
-      risk_matches: []
-      diff_lines: 0
+      risk_matches:
+        - path: .github/workflows/crucible-review.yml
+          glob: .github/workflows/**
+        - path: .github/workflows/crucible.yml
+          glob: .github/workflows/**
+        - path: crucible.yaml
+          glob: crucible.yaml
+      diff_lines: 349
       diff_cap: 400
       cap_exceeded: false
   change_type: feature
