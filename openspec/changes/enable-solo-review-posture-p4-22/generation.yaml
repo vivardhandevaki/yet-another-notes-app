@@ -1,0 +1,12 @@
+version: 1
+change: enable-solo-review-posture-p4-22
+generated_at: 2026-08-10T16:18:27.060Z
+artifacts:
+  - path: proposal.md
+    hash: 754cb6b024f73b8d17462c912f01ebff5be0764e1efcf69f9625a0352d1aa755
+  - path: design.md
+    hash: 3c219e4da7107af0d8dca0afd25125af9e3ad3d495c988b2200d44b748214392
+  - path: specs/review-posture/spec.md
+    hash: 625d6ba35e8717607dda4fac096a7cc23a8fdc93f4a46a44375f4bedc79b39f9
+  - path: oracles.md
+    hash: 5a02ec5214344e4446557d07e2fc807b147c5527a4bea65ac17e728a5d5f24bc

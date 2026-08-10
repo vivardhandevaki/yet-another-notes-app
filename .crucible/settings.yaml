@@ -20,4 +20,4 @@ models: {}
 notify: {}
 
 review:
-  local_mode: advisory
+  local_mode: required
