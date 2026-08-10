@@ -1,0 +1,36 @@
+change: enable-solo-review-posture-p4-22
+events:
+  - at: 2026-08-10T16:18:27.063Z
+    execution_mode: session-native
+    cmd: propose
+    summary: "session-native bundle judged pass (2 check(s)) [type: feature]"
+  - at: 2026-08-10T16:22:07.507Z
+    cmd: approve
+    summary: sealed 7 file(s)
+  - at: 2026-08-10T16:25:51.114Z
+    execution_mode: session-native
+    cmd: implement
+    summary: session-native local verify pass
+snapshot:
+  phase: implemented
+  tier:
+    tier: critical
+    computed: critical
+    forced: critical
+    reasons:
+      - "risk-glob match: .github/workflows/crucible-review.yml ~
+        .github/workflows/** → critical (dominates)"
+      - --tier critical matches the computed tier
+    facts:
+      spec_delta: true
+      risk_matches:
+        - path: .github/workflows/crucible-review.yml
+          glob: .github/workflows/**
+        - path: .github/workflows/crucible.yml
+          glob: .github/workflows/**
+        - path: crucible.yaml
+          glob: crucible.yaml
+      diff_lines: 349
+      diff_cap: 400
+      cap_exceeded: false
+  change_type: feature

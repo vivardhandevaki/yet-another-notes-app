@@ -56,9 +56,6 @@ name: Crucible
 
 on:
   pull_request:
-  # Re-run when a review is submitted/dismissed so `route` re-checks approval and
-  # the required check flips green the moment a non-author approves.
-  pull_request_review:
 
 # `route` reads the PR's reviews via the ambient GITHUB_TOKEN (workflow-level
 # perms). `verify` escalates its own job-level perms: `issues: write` to file an
@@ -297,37 +294,3 @@ jobs:
             body+=$'\n'"**${change}**"$'\n'"$notes"$'\n'
           done
           gh pr comment "$PR_NUMBER" --edit-last --create-if-none --body "$body"
-
-  # The second required check. Auto-routed (trivial/standard) changes pass
-  # immediately; critical changes stay RED until a non-author APPROVED review
-  # exists (design phase-2.md §2). Crucible emits the decision; GitHub enforces the
-  # human gate. Mark BOTH `verify` and `route` required in branch protection.
-  route:
-    needs: verify
-    runs-on: ubuntu-latest
-    steps:
-      - name: Enforce the routing decision
-        env:
-          ROUTING: ${{ needs.verify.outputs.routing }}
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-        # Fail-closed: human routing without a qualifying review is exit 1 (the
-        # required check stays red). No `|| true` / `continue-on-error`.
-        run: |
-          set -euo pipefail
-          if [ "$ROUTING" != "human" ]; then
-            echo "Routing is '$ROUTING' — auto-merge path; no human review required."
-            exit 0
-          fi
-          echo "Routing is 'human' — a non-author APPROVED review is required to merge."
-          # Query the PR's reviews via the ambient token; count APPROVED reviews
-          # whose author is not the PR author. `gh api` needs no checkout.
-          approved="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews" \
-            --jq "[.[] | select(.state == \"APPROVED\" and .user.login != \"$PR_AUTHOR\")] | length")"
-          if [ "$approved" -gt 0 ]; then
-            echo "Found a non-author APPROVED review — human routing satisfied."
-            exit 0
-          fi
-          echo "No non-author APPROVED review yet — this check stays red until one lands."
-          exit 1

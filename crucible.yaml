@@ -39,3 +39,7 @@ trajectory:
 
 audit:
   sample_rate: 0.1 # of auto-merges → weekly digest
+
+review:
+  ci_mode: advisory
+  human_mode: advisory
