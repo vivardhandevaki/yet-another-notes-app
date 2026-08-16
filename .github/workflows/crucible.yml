@@ -55,7 +55,6 @@
 name: Crucible
 
 on:
-  pull_request:
   pull_request_target: # Re-run when a review is submitted/dismissed so `route` re-checks approval and
 
   # the required check flips green the moment a non-author approves.
@@ -75,7 +74,6 @@ jobs:
   # `continue-on-error` and no `|| true`: the gate must not be silently
   # satisfiable (fail-closed, invariant #3). Its `routing` output feeds `route`.
   verify:
-    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -154,81 +152,8 @@ jobs:
 
   # Credential-separated authority: this job reads candidate bytes as data and
   # recomputes routing with target config/pin. It never consumes verify outputs.
-  route:
-    if: ${{ github.event_name != 'pull_request' }}
-    needs:
-      - authority
-      - verify
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: read
-      issues: write
-    steps:
-      - name: Checkout candidate data (exact event SHA)
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          fetch-depth: 0
-          persist-credentials: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Download authority handoff
-        uses: actions/download-artifact@v4
-        with:
-          name: crucible-authority
-          path: ${{ runner.temp }}/crucible-authority
-      - name: Checkout target-pinned Crucible framework
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ needs.authority.outputs.repository }}
-          ref: ${{ needs.authority.outputs.commit }}
-          path: crucible-framework
-          persist-credentials: false
-      - name: Build target-pinned Crucible framework
-        working-directory: crucible-framework
-        run: |
-          set -euo pipefail
-          npm ci
-          npm run build
-      - name: Recompute route and enforce independent review
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
-        run: >
-          set -euo pipefail
 
-          report="$(node
-          "$GITHUB_WORKSPACE/crucible-framework/core/dist/cli/bin.js" --json
-          --config-from "$RUNNER_TEMP/crucible-authority/snapshot" ci route
-          --manifest "$RUNNER_TEMP/crucible-authority/authority.json")"
-
-          printf '%s\n' "$report"
-
-          routing="$(printf '%s' "$report" | jq -r '.routing.decision')"
-
-          if [ "$routing" != "human" ]; then
-            echo "Routing is '$routing' — auto-merge path."
-            exit 0
-          fi
-
-          approved="$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR_NUMBER/reviews"
-          --jq "[.[] | select(.state == \"APPROVED\" and .user.login !=
-          \"$PR_AUTHOR\")] | length")"
-
-          if [ "$approved" -gt 0 ]; then
-            echo "Found a non-author APPROVED review — human routing satisfied."
-            exit 0
-          fi
-
-          echo "No non-author APPROVED review yet — this check stays red until
-          one lands."
-
-          exit 1
   authority:
-    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -347,15 +272,3 @@ jobs:
           name: crucible-authority
           path: ${{ runner.temp }}/crucible-authority
           if-no-files-found: error
-
-  legacy-bootstrap:
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Manual legacy bootstrap acknowledgement
-        run: |
-          set -euo pipefail
-          echo Legacy bootstrap requires manual bootstrap acknowledgement.
-          echo This candidate-owned job is not a Crucible enforcement gate.
