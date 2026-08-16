@@ -55,7 +55,6 @@
 name: Crucible
 
 on:
-  pull_request:
   pull_request_target: # Re-run when a review is submitted/dismissed so `route` re-checks approval and
 
   # the required check flips green the moment a non-author approves.
@@ -75,7 +74,6 @@ jobs:
   # `continue-on-error` and no `|| true`: the gate must not be silently
   # satisfiable (fail-closed, invariant #3). Its `routing` output feeds `route`.
   verify:
-    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -155,7 +153,6 @@ jobs:
   # Credential-separated authority: this job reads candidate bytes as data and
   # recomputes routing with target config/pin. It never consumes verify outputs.
   route:
-    if: ${{ github.event_name != 'pull_request' }}
     needs:
       - authority
       - verify
@@ -228,7 +225,6 @@ jobs:
 
           exit 1
   authority:
-    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -347,15 +343,3 @@ jobs:
           name: crucible-authority
           path: ${{ runner.temp }}/crucible-authority
           if-no-files-found: error
-
-  legacy-bootstrap:
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Manual legacy bootstrap acknowledgement
-        run: |
-          set -euo pipefail
-          echo Legacy bootstrap requires manual bootstrap acknowledgement.
-          echo This candidate-owned job is not a Crucible enforcement gate.
